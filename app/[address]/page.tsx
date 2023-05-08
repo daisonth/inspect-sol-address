@@ -7,6 +7,8 @@ import DashCard from "./components/DashCards"
 import axios from "axios"
 import { Metaplex } from "@metaplex-foundation/js"
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js"
+import dotenv from 'dotenv';
+dotenv.config();
 
 const url = "https://rest-api.hellomoon.io/v0/token/balances-by-owner";
 
@@ -23,20 +25,28 @@ async function TokenBalancesByOwner(add: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer 014b8edb-ca22-4142-bbd8-58fa9e33ce95",
+        Authorization: `Bearer ${process.env.Bearer}`,
       },
     }
   );
+  console.log(data[0].mint)
 
-  const addr = data[0].mint;
-  const mintad = new PublicKey(addr);
-  const nft = await metaplex.nfts().findByMint({ mintAddress: mintad });
+  const mints = data.map(item => { item.mint; })
 
-  return data;
+  console.log(mints)
+
+  return data
 }
 
 export default async function DashboardPage({ params }: any) {
-  const data = await TokenBalancesByOwner(params.address)
+  // const connection = new Connection(clusterApiUrl("mainnet-beta"));
+  // const metaplex = new Metaplex(connection);
+  // const data = await TokenBalancesByOwner(params.address)
+  // const addr = data[0].mint;
+  // const mint = new PublicKey(addr);
+  // const nft = await metaplex.nfts().findByMint({ mintAddress: mint });
+  // console.log(nft.model)
+
 
   return (
     <div className="flex-col md:flex">
@@ -45,6 +55,7 @@ export default async function DashboardPage({ params }: any) {
           <HeadTitle txt="Dashboard" />
           <TabSwitcher />
         </div>
+        <p>{params.address}</p>
         <Tabs defaultValue="overview" className="space-y-4">
           <TabsContent value="overview" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
