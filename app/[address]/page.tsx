@@ -5,6 +5,12 @@ import HeadTitle from "./components/headTitle"
 import TabSwitcher from "./components/TabSwitcher"
 import DashCard from "./components/DashCards"
 
+const getData = async () => {
+  const res = await fetch("https://api.cms.com/....");
+  return res.json();
+};
+
+
 export default function DashboardPage(params: any) {
   return (
     <div className="flex-col md:flex">
@@ -16,7 +22,7 @@ export default function DashboardPage(params: any) {
         <Tabs defaultValue="overview" className="space-y-4">
           <TabsContent value="overview" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <DashCard title="Total Next Worth" amount="$45,231.89" subtitle="+20.1% from last month" />
+              <DashCard title="Total Net Worth" amount="$45,231.89" subtitle="+20.1% from last month" />
               <DashCard title="Total NFT Value" amount="$45,231.89" subtitle="+20.1% from last month" />
               <DashCard title="Total Token Worth" amount="$45,231.89" subtitle="+20.1% from last month" />
               <DashCard title="Total Next Worth" amount="$45,231.89" subtitle="+20.1% from last month" />
