@@ -1,17 +1,11 @@
 import { Metadata } from "next"
-import Image from "next/image"
-import { Activity, CreditCard, DollarSign, Download, Users } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
+import { Activity, CreditCard, DollarSign, Users } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CalendarDateRangePicker } from "./components/date-range-picker"
-import { MainNav } from "./components/main-nav"
-import { Overview } from "./components/overview"
 import { RecentSales } from "./components/recent-sales"
-import { Search } from "./components/search"
-import { UserNav } from "./components/user-nav"
-import TeamSwitcher from "./components/team-switcher"
+import HeadTitle from "./components/headTitle"
+import NavBar from "./components/NavBar"
+import TabSwitcher from "./components/TabSwitcher"
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -22,55 +16,20 @@ export default function DashboardPage({ params }: any) {
   return (
     <>
       <div className="flex-col md:flex">
-        <div className="border-b border-black">
-          <div className="flex h-16 items-center px-4">
-            <div className="mx-auto flex items-center space-x-4">
-              <Image className="hidden sm:inline-flex" src="/soldash_logo.png" width="200" height="50" alt="logo" />
-              <Search />
-              <Button size="sm">
-                <Download className="mr-2 h-4 w-4" />
-                Connect
-              </Button>
-            </div>
-          </div>
-        </div>
+        <NavBar />
         <div className="flex-1 space-y-4 p-8 pt-6 xl:mx-64">
           <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">Dashboard {params.address}</h2>
-            <div className="flex items-center space-x-2">
-              <Button size="sm">
-                <Download className="mr-2 h-4 w-4" />
-                Connect
-              </Button>
-              <Button size="sm">
-                <Download className="mr-2 h-4 w-4" />
-                Connect
-              </Button>
-              <Button size="sm">
-                <Download className="mr-2 h-4 w-4" />
-                Connect
-              </Button>
-            </div>
+            <HeadTitle txt="Dashboard" />
+            <TabSwitcher />
           </div>
           <Tabs defaultValue="overview" className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="analytics" disabled>
-                Analytics
-              </TabsTrigger>
-              <TabsTrigger value="reports" disabled>
-                Reports
-              </TabsTrigger>
-              <TabsTrigger value="notifications" disabled>
-                Notifications
-              </TabsTrigger>
-            </TabsList>
+
             <TabsContent value="overview" className="space-y-4">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Total Revenue
+                      Total Net Worth
                     </CardTitle>
                     <DollarSign className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
@@ -84,7 +43,7 @@ export default function DashboardPage({ params }: any) {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                      Subscriptions
+                      Total NFT Value
                     </CardTitle>
                     <Users className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
@@ -97,7 +56,9 @@ export default function DashboardPage({ params }: any) {
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Sales</CardTitle>
+                    <CardTitle className="text-sm font-medium">
+                      Total Tocken Value
+                    </CardTitle>
                     <CreditCard className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
@@ -109,7 +70,9 @@ export default function DashboardPage({ params }: any) {
                 </Card>
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium"> Active Now </CardTitle>
+                    <CardTitle className="text-sm font-medium">
+                      No. of Items
+                    </CardTitle>
                     <Activity className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
@@ -147,7 +110,7 @@ export default function DashboardPage({ params }: any) {
             </TabsContent>
           </Tabs>
         </div>
-      </div>
+      </div >
     </>
   )
 }
