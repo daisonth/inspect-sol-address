@@ -46,8 +46,8 @@ async function getMetaplexMetadata(add: string[]) {
 }
 
 export default async function DashboardPage({ params }: any) {
-  const mintaddresses = await getTokenBalancesByOwner(params.address)
-  const tockenmetaDatas = await getMetaplexMetadata(mintaddresses)
+  // const mintaddresses = await getTokenBalancesByOwner(params.address)
+  // const tockenmetaDatas = await getMetaplexMetadata(mintaddresses)
 
   return (
     <div className="flex-col md:flex">
