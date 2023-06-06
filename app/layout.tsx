@@ -1,8 +1,10 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
-const inter = Inter({ subsets: ['latin'] })
+import { Russo_One, Inter, Varela_Round } from 'next/font/google'
 import WalletContextProvider from "./components/WalletContextProvider";
 import NavBar from "./components/NavBar";
+
+const inter = Inter({ subsets: ['latin'] })
+const ver = Russo_One({ variable: "--display-font", weight: '400', subsets: ['latin'] })
 
 export const metadata = {
   title: 'Create Next App',
@@ -15,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className="{inter.className} bg-[#000000]">
+    <html lang="en" className={`${ver.variable}`}>
+      <body className='bg-fuchsia-100' >
         <WalletContextProvider>
           <NavBar />
           {children}
