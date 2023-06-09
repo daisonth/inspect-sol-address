@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@hellomoon/api": "^1.15.0-alpha.19",
+    "@hellomoon/api": "^1.16.5",
     "@metaplex-foundation/js": "^0.19.2",
     "@metaplex-foundation/mpl-token-metadata": "^2.11.0",
     "@radix-ui/react-avatar": "^1.0.2",

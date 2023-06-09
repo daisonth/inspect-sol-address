@@ -4,50 +4,13 @@ import { RecentSales } from "./components/recent-sales"
 import HeadTitle from "./components/headTitle"
 import TabSwitcher from "./components/TabSwitcher"
 import DashCard from "./components/DashCards"
-import axios from "axios"
+import getUsersTokens from "./components/getTokens"
 import dotenv from 'dotenv';
 dotenv.config();
 
-
-async function getTokenBalancesByOwner(add: string) {
-  const { data } = await axios.post(
-    "https://rest-api.hellomoon.io/v0/token/balances-by-owner",
-    {
-      ownerAccount: add
-    },
-    {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.Bearer}`,
-      },
-    }
-  );
-  const mintaddresses = data.map((item: any) => item.mint)
-  return mintaddresses
-}
-
-async function getMetaplexMetadata(add: string[]) {
-  const { data } = await axios.post(
-    "https://rest-api.hellomoon.io/v0/nft/mint_information",
-    {
-      "nftMint": add
-    },
-    {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.Bearer}`,
-      },
-    }
-  );
-  const metadataJson = data.data.map((item: any) => item.nftMetadataJson)
-  return metadataJson
-}
-
 export default async function DashboardPage({ params }: any) {
-  // const mintaddresses = await getTokenBalancesByOwner(params.address)
-  // const tockenmetaDatas = await getMetaplexMetadata(mintaddresses)
+
+  const data = await getUsersTokens(params.address)
 
   return (
     <div className="flex-col md:flex">
@@ -90,3 +53,41 @@ export default async function DashboardPage({ params }: any) {
     </div >
   )
 }
+
+// async function getTokenBalancesByOwner(add: string) {
+//   const { data } = await axios.post(
+//     "https://rest-api.hellomoon.io/v0/token/balances-by-owner",
+//     {
+//       ownerAccount: add
+//     },
+//     {
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${process.env.Bearer}`,
+//       },
+//     }
+//   );
+//   const mintaddresses = data.map((item: any) => item.mint)
+//   return mintaddresses
+// }
+//
+// async function getMetaplexMetadata(add: string[]) {
+//   const { data } = await axios.post(
+//     "https://rest-api.hellomoon.io/v0/nft/mint_information",
+//     {
+//       "nftMint": add
+//     },
+//     {
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${process.env.Bearer}`,
+//       },
+//     }
+//   );
+//   const metadataJson = data.data.map((item: any) => item.nftMetadataJson)
+//   return metadataJson
+// }
+
+
