@@ -1,29 +1,41 @@
-import getPrice from './getPrice';
 import { RestClient, TokenBalancesByOwnerRequest } from '@hellomoon/api';
+import getPrice from './getPrice';
+
 import dotenv from 'dotenv';
 dotenv.config();
 
+interface tokens {
+  mint: string,
+  amount: number,
+  name?: string,
+  price?: number,
+  image?: string,
+}
+
 export default async function getUsersTokens(ownerAccount: string) {
-  let data: [];
+
   const client = new RestClient(`${process.env.Bearer}`);
-  await client.send(new TokenBalancesByOwnerRequest({
-    ownerAccount
-  }))
-    .then((res: []) => {
-      res.forEach(async (i: { mint: any; amount: any }) => {
-        if (i.amount > 0) {
-          const price = await getPrice(i.mint)
-          console.log(`mint : ${i.mint}`)
-          console.log(`amount : ${i.amount}`)
-          console.log(`price : ${price * i.amount} \n`)
-          // console.log(`value : ${json?.data?.value}`)
-          //
-          data.push({ mint, amount, price });
-        } else {
-          console.log("request failed blah")
-        }
-      })
-    })
-  // .catch(console.error);
-  return data;
+
+  client.send(new TokenBalancesByOwnerRequest({ ownerAccount }))
+    .then(dothis)
+    .catch(console.error);
+}
+
+async function dothis(res: any) {
+  console.log(`\n\n\n\nits an fucking ${typeof res}\n\n\n\n\n`)
+  // let data: { mint: string, amount: string, price: number }[] = new Array();
+  let data: tokens[] = new Array();
+
+  for (let i in res) {
+    if (res[i].amount > 0) {
+      let price = await getPrice(res[i].mint)
+      data.push(Object.create({
+        mint: res[i].mint,
+        amount: res[i].amount,
+        price: price
+      }));
+    }
+  }
+
+  console.log(`${data[0].mint}\n${data[0].amount}\n${data[0].price}\n${data[0].mint}\n`);
 }

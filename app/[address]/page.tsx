@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default async function DashboardPage({ params }: any) {
+  console.log(`type : ${typeof params.address}`)
 
   const data = await getUsersTokens(params.address)
 
