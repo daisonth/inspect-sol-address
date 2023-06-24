@@ -22,7 +22,7 @@ export default async function getUsersTokens(ownerAccount: string) {
 }
 
 async function dothis(res: any) {
-  console.log(`\n\n\n\nits an fucking ${typeof res}\n\n\n\n\n`)
+  console.log(`\nTokens\n`)
   // let data: { mint: string, amount: string, price: number }[] = new Array();
   let data: tokens[] = new Array();
 
@@ -36,6 +36,8 @@ async function dothis(res: any) {
       }));
     }
   }
-
-  console.log(`${data[0].mint}\n${data[0].amount}\n${data[0].price}\n${data[0].mint}\n`);
+  let n = 0;
+  data.forEach(i => console.log(`${++n}) mint: ${i.mint} | amount: ${i.amount} | price: ${i.price}`))
+  console.log(`Token count : ${data.length}`)
+  // console.log(`${data[0].mint}\n${data[0].amount}\n${data[0].price}\n${data[0].mint}\n`);
 }

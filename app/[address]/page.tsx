@@ -5,13 +5,16 @@ import HeadTitle from "./components/headTitle"
 import TabSwitcher from "./components/TabSwitcher"
 import DashCard from "./components/DashCards"
 import getUsersTokens from "./components/getTokens"
+import getUsersTokens2 from "./components/getmetaplex"
 import dotenv from 'dotenv';
+import getUsersNfts from "./components/getNfts"
 dotenv.config();
 
 export default async function DashboardPage({ params }: any) {
-  console.log(`type : ${typeof params.address}`)
 
-  const data = await getUsersTokens(params.address)
+  // const data1 = await getUsersTokens(params.address)
+  // const data2 = await getUsersNfts(params.address)
+  const data2 = await getUsersTokens2(params.address)
 
   return (
     <div className="flex-col md:flex">
