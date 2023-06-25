@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default async function getUsersTokens2(ownerAccount: string) {
-  const connection = new Connection(`https://mainnet.helius-rpc.com/?api-key=${process.env.Helius_rpc}`, 'confirmed',);
+  const connection = new Connection(`https://mainnet.helius-rpc.com/?api-key=${process.env.Helius_pin}`, 'confirmed',);
   const metaplex = new Metaplex(connection);
   const owner = await getOwner(ownerAccount);
 
