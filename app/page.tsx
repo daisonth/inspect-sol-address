@@ -43,7 +43,7 @@ export default function Home() {
           <h1 className="font-display font-bold tracking-tight text-gray-900 sm:text-6xl">
             Welcome To
           </h1>
-          <Image className="hidden sm:inline-flex mt-4" src="/soldash_logo.png" width="400" height="100" alt="logo" />
+          <Image className="hidden sm:inline-flex mt-4" src={logo_light} width="400" height="100" alt="logo" />
           <p className="mt-6 text-lg leading-8 text-gray-600">
             Connect your browser wallet or search any solana public wallet key to proceed
           </p>

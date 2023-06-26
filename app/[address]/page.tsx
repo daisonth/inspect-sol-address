@@ -4,18 +4,13 @@ import { RecentSales } from "./components/recent-sales"
 import HeadTitle from "./components/headTitle"
 import TabSwitcher from "./components/TabSwitcher"
 import DashCard from "./components/DashCards"
-import getUsersTokens from "./components/getTokens"
-import getUsersTokens2 from "./components/getmetaplex"
+import getTokens from "./components/getTokenHelius"
 import dotenv from 'dotenv';
-import getUsersNfts from "./components/getNfts"
-import getTokensHelius from "./getTokenHelius"
 dotenv.config();
 
 export default async function DashboardPage({ params }: any) {
-  // const data1 = await getUsersTokens(params.address)
-  // const data2 = await getUsersNfts(params.address)
-  // const data2 = await getUsersTokens2(params.address)
-  const data3 = await getTokensHelius(params.address)
+  const tokens = await getTokens(params.address)
+  // console.log(tokens)
 
   return (
     <div className="flex-col md:flex">
