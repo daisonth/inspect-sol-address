@@ -4,7 +4,6 @@ dotenv.config();
 interface tokenType {
   mint: string,
   amount: number,
-  isfundible: boolean,
   name: string,
   symbol: string,
   price: number,
@@ -50,32 +49,19 @@ async function getMetadata(res: any) {
 }
 
 async function organiseMetadata(data: any, res: any) {
-  const userTokens: Array<tokenType> = new Array();
+  const userFts: Array<tokenType> = new Array();
+  const userNfts: Array<tokenType> = new Array();
 
   for (let i in data) {
 
     const mint = data[i].account;
-    let name: string
-    let symbol: string
+    let name: string = "nil";
+    let symbol: string = "nil";
     let price: number
     let totalPrice: number
     let image: string
     let amount = 0;
     let isfundible: boolean;
-
-    if (data[i].legacyMetadata != null) {
-      name = data[i].legacyMetadata.name;
-      symbol = data[i].legacyMetadata.symbol;
-      price = await getPrice(mint);
-      totalPrice = amount * price;
-      image = data[i].legacyMetadata.logoURI;
-    } else {
-      name = data[i].offChainMetadata.metadata.name;
-      symbol = data[i].offChainMetadata.metadata.symbol;
-      price = await getPrice(mint);
-      totalPrice = amount * price;
-      image = data[i].offChainMetadata.metadata.image;
-    }
 
     if (data[i].onChainMetadata.metadata != null && data[i].onChainMetadata.metadata.tokenStandard == 'NonFungible') {
       isfundible = false
@@ -89,10 +75,25 @@ async function organiseMetadata(data: any, res: any) {
       })
       if (mint == nativeSol) amount = res.nativeBalance / Math.pow(10, 9);
     }
+
+    if (data[i].legacyMetadata != null) {
+      name = data[i].legacyMetadata.name;
+      symbol = data[i].legacyMetadata.symbol;
+      price = await getPrice(mint);
+      totalPrice = amount * price;
+      image = data[i].legacyMetadata.logoURI;
+    } else {
+      if (data[i].offChainMetadata.metadata == null) continue
+      name = data[i].offChainMetadata.metadata.name;
+      symbol = data[i].offChainMetadata.metadata.symbol;
+      price = await getPrice(mint);
+      totalPrice = amount * price;
+      image = data[i].offChainMetadata.metadata.image;
+    }
+
     const token: tokenType = {
       mint: mint,
       amount: amount,
-      isfundible: isfundible,
       name: name,
       symbol: symbol,
       price: price,
@@ -100,11 +101,14 @@ async function organiseMetadata(data: any, res: any) {
       image: image
     } as tokenType
 
-    userTokens.push(token);
+    if (isfundible) userFts.push(token)
+    else userNfts.push(token)
   }
 
-  userTokens.sort((a, b) => a.amount - b.amount);
-  return userTokens
+  userFts.sort((a: tokenType, b: tokenType) => b.amount - a.amount);
+  userNfts.sort((a: tokenType, b: tokenType) => b.amount - a.amount);
+
+  return { userFts, userNfts }
 }
 
 async function getPrice(mint: string) {

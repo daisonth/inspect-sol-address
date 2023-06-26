@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
 import { Tabs, TabsContent, } from "@/components/ui/tabs"
-import { RecentSales } from "./components/recent-sales"
+import { TokenList } from "./components/ListTokens"
 import HeadTitle from "./components/headTitle"
 import TabSwitcher from "./components/TabSwitcher"
 import DashCard from "./components/DashCards"
@@ -10,7 +10,24 @@ dotenv.config();
 
 export default async function DashboardPage({ params }: any) {
   const tokens = await getTokens(params.address)
-  // console.log(tokens)
+
+  let totalNftValue = tokens.userFts.reduce((a, b) => a + b.totalPrice, 0);
+  let totalFtValue = tokens.userNfts.reduce((a, b) => a + b.totalPrice, 0);
+  const totalAssetValue = totalFtValue + totalNftValue;
+
+  let nfts = [];
+  for (let i = 0; i < tokens.userNfts.length; i++) {
+    nfts.push(
+      <TokenList key={i} {...tokens.userNfts[i]} />
+    );
+  }
+
+  let fts = [];
+  for (let i = 0; i < tokens.userFts.length; i++) {
+    fts.push(
+      <TokenList key={i} {...tokens.userFts[i]} />
+    );
+  }
 
   return (
     <div className="flex-col md:flex">
@@ -23,27 +40,24 @@ export default async function DashboardPage({ params }: any) {
         <Tabs defaultValue="overview" className="space-y-4">
           <TabsContent value="overview" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <DashCard title="Total Net Worth" amount="$45,231.89" subtitle="+20.1% from last month" />
-              <DashCard title="Total NFT Value" amount="$45,231.89" subtitle="+20.1% from last month" />
-              <DashCard title="Total Token Worth" amount="$45,231.89" subtitle="+20.1% from last month" />
-              <DashCard title="Total Next Worth" amount="$45,231.89" subtitle="+20.1% from last month" />
+              <DashCard title="Total Asset Value" amount={totalAssetValue} subtitle="" />
+              <DashCard title="Total FT Value" amount={totalFtValue} subtitle="" />
+              <DashCard title="Total NFT Value" amount={totalNftValue} subtitle="" />
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
 
               <Card className="col-span-3">
                 <CardHeader>
-                  <CardTitle>Fundible Tockens</CardTitle>
-                  <CardDescription> You made 265 sales this month. </CardDescription>
+                  <CardTitle>Fundible Tokens</CardTitle>
                 </CardHeader>
-                <CardContent> <RecentSales /> </CardContent>
+                <CardContent> {fts} </CardContent>
               </Card>
 
               <Card className="col-span-3">
                 <CardHeader>
                   <CardTitle>Non Fundible Tokens</CardTitle>
-                  <CardDescription> You made 265 sales this month. </CardDescription>
                 </CardHeader>
-                <CardContent> <RecentSales /> </CardContent>
+                <CardContent> {nfts} </CardContent>
               </Card>
 
             </div>
