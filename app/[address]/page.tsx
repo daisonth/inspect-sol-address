@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, } from "@/components/ui/card"
 import { Tabs, TabsContent, } from "@/components/ui/tabs"
 import { TokenList } from "./components/ListTokens"
 import HeadTitle from "./components/headTitle"
@@ -44,20 +44,24 @@ export default async function DashboardPage({ params }: any) {
               <DashCard title="Total FT Value" amount={totalFtValue} subtitle="" />
               <DashCard title="Total NFT Value" amount={totalNftValue} subtitle="" />
             </div>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+            <div className="grid gap-4  md:grid-cols-2 lg:grid-cols-6">
 
-              <Card className="col-span-3">
+              <Card className="col-span-3 pb-5 border-black">
                 <CardHeader>
                   <CardTitle>Fundible Tokens</CardTitle>
                 </CardHeader>
-                <CardContent> {fts} </CardContent>
+                <div className="max-h-[50vh] overflow-scroll">
+                  <CardContent> {fts} </CardContent>
+                </div>
               </Card>
 
-              <Card className="col-span-3">
+              <Card className="col-span-3 pb-5 border-black">
                 <CardHeader>
                   <CardTitle>Non Fundible Tokens</CardTitle>
                 </CardHeader>
-                <CardContent> {nfts} </CardContent>
+                <div className="max-h-[50vh] overflow-scroll">
+                  <CardContent> {nfts} </CardContent>
+                </div>
               </Card>
 
             </div>

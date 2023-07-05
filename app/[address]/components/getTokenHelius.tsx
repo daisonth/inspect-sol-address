@@ -126,5 +126,3 @@ export default async function getTokens(owneraccount: string) {
   const tokens = await organiseMetadata(tokenMetadata, tokenBalances);
   return tokens
 }
-
-
